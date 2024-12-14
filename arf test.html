@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us Lumina Assassins</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100%;
+            background: linear-gradient(to bottom, #111, #222);
+            color: #f0f0f0;
+            overflow-x: hidden;
+            padding-top: 60px; /* Offset for fixed navbar */
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .team-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #DC143C;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #f0f0f0;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #DC143C;
+            transform: scale(1.1);
+        }
+
+        .banner {
+            width: 100%;
+            height: 100vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('your-image.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+            text-align: left;
+        }
+
+        .banner-text {
+            color: #f0f0f0;
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .banner-text h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .banner-text h1 span {
+            color: #DC143C; /* Red color for "Lumina Assassins" */
+        }
+
+        .banner-text p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-align: center;
+            margin: 20px 10px;
+            border-radius: 25px;
+            background-color: #DC143C;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #a10f2f;
+            transform: scale(1.1);
+        }
+
+        .slider {
+            margin-top: 60px;
+            height: calc(100vh - 60px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 15px;
+            height: 15px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s;
+        }
+
+        .dot:hover {
+            transform: scale(1.2);
+        }
+
+        .dot.active {
+            background-color: #DC143C;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        .who-are-we {
+            text-align: center;
+            animation: fadeInUp 1s ease-in-out;
+            margin-top: 50px;
+        }
+
+        .who-are-we i {
+            font-size: 50px;
+            color: #DC143C;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite alternate;
+        }
+
+        .who-are-we h2 {
+            font-size: 2.5em;
+            color: #f0f0f0;
+        }
+
+        .card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1000px;
+            width: 100%;
+            height: 500px;
+            background-color: rgba(50, 50, 50, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+        }
+
+        .card img {
+            width: 300px;
+            height: auto;
+            border-radius: 8px;
+            margin-left: 20px;
+        }
+
+        .image-left {
+            flex-direction: row;
+        }
+
+        .image-right {
+            flex-direction: row-reverse;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .card img {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .comment-section {
+            width: 100%;
+            max-width: 1000px;
+            height: 300px;
+            margin: 50px auto;
+            background-color: rgba(50, 50, 50, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .comment-section h3 {
+            color: #f0f0f0;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            height: 150px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1em;
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        .comment-form button {
+            padding: 10px 20px;
+            background-color: #DC143C;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .comment-form button:hover {
+            background-color: #a10f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="team-name">Lumina Assassins</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#robot-game">Robot Game</a></li>
+            <li><a href="#about-us">About Us</a></li>
+        </ul>
+    </div>
+
+    <div class="banner">
+        <div class="banner-text">
+            <h1>Meet the individuals of <span>Lumina Assassins</span></h1>
+            <a href="#about-us" class="btn">Learn More</a>
+        </div>
+    </div>
+
+    <div class="slider">
+        <div class="slide active" style="background-image: url('slide1.jpg');"></div>
+        <div class="slide" style="background-image: url('slide2.jpg');"></div>
+        <div class="slide" style="background-image: url('slide3.jpg');"></div>
+        <div class="slider-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <div class="section who-are-we">
+        <i class="fas fa-users"></i>
+        <h2>Who Are We?</h2>
+    </div>
+
+    <div class="section">
+        <div class="card image-left">
+            <img src="yuzhe.png" alt="Tan Yu Zhe - Robot base technology">
+            <div>
+                <h3>Tan Yu Zhe</h3>
+                <p>Our robot base, showcasing cutting-edge technology and innovation.</p>
+            </div>
+        </div>
+        <div class="card image-right">
+            <img src="yuzhe.png" alt="Tan Yu Zhe - Robot base technology">
+            <div>
+                <h3>Tan Yu Zhe</h3>
+                <p>Our robot base, showcasing cutting-edge technology and innovation.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment-section">
+        <h3>Leave a Comment</h3>
+        <form class="comment-form">
+            <textarea placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = index;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        let slideInterval = setInterval(() => {
+            const nextSlide = (currentSlide + 1) % slides.length;
+            showSlide(nextSlide);
+        }, 5000);
+
+        const slider = document.querySelector('.slider');
+        slider.addEventListener('mouseenter', () => clearInterval(slideInterval));
+        slider.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(() => {
+                const nextSlide = (currentSlide + 1) % slides.length;
+                showSlide(nextSlide);
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

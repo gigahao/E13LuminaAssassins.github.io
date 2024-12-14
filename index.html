@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/jpg" href="Assassins Logo.webp">
+    <title>Lumina Assassins</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100%;
+            background: linear-gradient(to bottom, #111, #222);
+            color: #f0f0f0;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .team-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #DC143C;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #f0f0f0;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #DC143C;
+            transform: scale(1.1);
+        }
+
+        .banner {
+            width: 100%;
+            height: 100vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('your-image.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            text-align: center;
+        }
+
+        .banner-text {
+            text-align: left;
+            color: #f0f0f0;
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .banner-text h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .banner-text h1 .red-text {
+            color: #DC143C; /* Lumina Assassins in red */
+        }
+
+        .banner-text h1 .white-text {
+            color: #ffffff; /* Welcome to in white */
+        }
+
+        .banner-text p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            width: auto;
+            padding: 10px 20px;
+            text-align: center;
+            margin: 20px 10px;
+            border-radius: 25px;
+            background-color: #DC143C;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #a10f2f;
+            transform: scale(1.1);
+        }
+
+        .slider {
+            margin-top: 60px;
+            height: calc(100vh - 60px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 15px;
+            height: 15px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s;
+        }
+
+        .dot:hover {
+            transform: scale(1.2);
+        }
+
+        .dot.active {
+            background-color: #DC143C;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(50, 50, 50, 0);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card h2 {
+            color: #DC143C;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+        }
+
+        .card img {
+            width: 300px;
+            height: auto;
+            border-radius: 8px;
+            margin-left: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .card img {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+        }
+
+        .vote-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(50, 50, 50, 0.8); /* Same as the cards */
+    color: #DC143C; /* Red text */
+    padding: 20px;
+    border-radius: 10px; /* Match the cards' rounded corners */
+    margin-bottom: 20px; /* Add space below the section */
+    width: 100%; /* Responsive width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); /* Match the card shadow */
+    text-align: center; /* Center-align text */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hover effect */
+}
+
+.vote-section:hover {
+    transform: scale(1.05); /* Hover effect for interactivity */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Enhance shadow on hover */
+}
+
+.vote-section h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.vote-section h1 {
+    font-size: 3em;
+    margin: 10px 0 0;
+    font-weight: 900;
+}
+
+.footer {
+  position: relative;
+  width: 94.675%;
+  background:#3586ff;
+  min-height: 100px;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.social-icon,
+.menu {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.social-icon__item,
+.menu__item {
+  list-style: none;
+}
+
+.social-icon__link {
+  font-size: 2rem;
+  color: #fff;
+  margin: 0 10px;
+  display: inline-block;
+  transition: 0.5s;
+}
+.social-icon__link:hover {
+  transform: translateY(-10px);
+}
+
+.menu__link {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 0 10px;
+  display: inline-block;
+  transition: 0.5s;
+  text-decoration: none;
+  opacity: 0.75;
+  font-weight: 300;
+}
+
+.menu__link:hover {
+  opacity: 1;
+}
+
+.footer p {
+  color: #fff;
+  margin: 15px 0 10px 0;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.wave {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: url("https://i.ibb.co/wQZVxxk/wave.png");
+  background-size: 1000px 100px;
+}
+
+.wave#wave1 {
+  z-index: 1000;
+  opacity: 1;
+  bottom: 0;
+  animation: animateWaves 4s linear infinite;
+}
+
+.wave#wave2 {
+  z-index: 999;
+  opacity: 0.5;
+  bottom: 10px;
+  animation: animate 4s linear infinite !important;
+}
+
+.wave#wave3 {
+  z-index: 1000;
+  opacity: 0.2;
+  bottom: 15px;
+  animation: animateWaves 3s linear infinite;
+}
+
+.wave#wave4 {
+  z-index: 999;
+  opacity: 0.7;
+  bottom: 20px;
+  animation: animate 3s linear infinite;
+}
+
+@keyframes animateWaves {
+  0% {
+    background-position-x: 1000px;
+  }
+  100% {
+    background-positon-x: 0px;
+  }
+}
+
+@keyframes animate {
+  0% {
+    background-position-x: -1000px;
+  }
+  100% {
+    background-positon-x: 0px;
+  }
+}
+
+
+    </style>
+</head>
+<body>
+
+    
+    
+    
+
+    <div class="navbar">
+        <div class="team-name"><img src="Assassins Logo.webp" alt="Assassins logo" height="75px" width="75px"></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="robotgame.html">Robot Game</a></li>
+            <li><a href="AboutUs.html">About Us</a></li>
+        </ul>
+    </div>
+
+    <div class="banner">
+        <div class="banner-text">
+            <h1>
+                <span class="white-text">Welcome to</span> 
+                <span class="red-text">E13 Assassins</span>
+            </h1>
+            
+            <a class="btn" onclick="scrollToSection(event, '#about-us')">Learn More</a>
+        </div>
+    </div>
+    <br>
+    <br>
+
+    
+    
+    
+    <div class="slider">
+        <div class="slide active" style="background-image: url('Assassinslogo.png');"></div>
+        <div class="slide" style="background-image: url('Veronica-1.jpeg');"></div>
+        <div class="slide" style="background-image: url('Veronica-2.jpeg');"></div>
+        <div class="slide" style="background-image: url('Route-planning.cover.jpeg');"></div>
+
+        <div class="slider-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    
+
+    <div class="section" id="about-us">
+        <div class="card">
+            <div>
+                <h2>Veronica</h2>
+                <p>Classic reimagined.Veronica 2.0</p>
+                <a href="Veronica.html" class="btn">More</a>
+            </div>
+            <img src="Veronica-1.jpeg" >
+        </div>
+        <div class="card">
+            <div>
+                <h2>Programming</h2>
+                <p>Where the magic begins.</p>
+                <a href="programing.html" class="btn">More</a>
+            </div>
+            <img src="programmingcover.png" >
+        </div>
+        <div class="card">
+            <div>
+                <h2>Route Planning</h2>
+                <p>Unparelled strategy.</p>
+                <a href="routeplanning.html" class="btn">More</a>
+            </div>
+            <img src="Route-planning.cover.jpeg" >
+        </div>
+        <div class="card">
+            <div>
+                <h2>Who We Are?</h2>
+                <p>Meet the individuals in our team.</p>
+                <a href="AboutUs.html" class="btn">More</a>
+            </div>
+            <img src="teamphoto.png" >
+        </div>
+    </div>
+
+    <div class="vote-section">
+        <h2>Vote For Us</h2>
+        <h1>E13</h1>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <footer class="footer">
+        <div class="waves">
+          <div class="wave" id="wave1"></div>
+          <div class="wave" id="wave2"></div>
+          <div class="wave" id="wave3"></div>
+          <div class="wave" id="wave4"></div>
+        </div>
+        
+        <ul class="menu">
+          <li class="menu__item"><a class="menu__link" href="index.html">Home</a></li>
+          <li class="menu__item"><a class="menu__link" href="robotgame.html">Robot Game</a></li>
+          <li class="menu__item"><a class="menu__link" href="AboutUs.html">About US</a></li>
+    
+        </ul>
+        <p> &emsp; &emsp; &copy;2024 Lumina Assassins | All Rights Reserved</p> 
+      </footer>
+
+    
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = index;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showSlide(index));
+        });
+
+        setInterval(() => {
+            showSlide((currentSlide + 1) % slides.length);
+        }, 3000);
+
+        // Function to smoothly scroll to a section
+        function scrollToSection(event, sectionId) {
+            event.preventDefault(); // Prevent default link behavior
+            const targetSection = document.querySelector(sectionId);
+            targetSection.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        
+         
+    </script>
+    
+
+
+</body>
+</html>             
